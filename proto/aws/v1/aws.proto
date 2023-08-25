@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package aws.v1;
+
+service AwsService {
+	rpc TestMethod(TestMethodRequest) returns (TestMethodResponse);
+}
+
+message TestMethodRequest {}
+
+message TestMethodResponse {}
