@@ -1,11 +1,21 @@
 syntax = "proto3";
 
-package aws.v1;
+package sample_aws.v1;
 
-service AwsService {
+service SampleAwsService {
 	rpc TestMethod(TestMethodRequest) returns (TestMethodResponse);
+	rpc UploadImage(UploadImageRequest) returns (UploadImageResponse);
 }
 
 message TestMethodRequest {}
 
 message TestMethodResponse {}
+
+message UploadImageRequest {
+	string name = 1;
+	string image_data = 2;
+}
+
+message UploadImageResponse {
+	string message = 1;
+}

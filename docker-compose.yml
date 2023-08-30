@@ -8,6 +8,10 @@ services:
       DATABASE_URL: ${DATABASE_URL}
       RUST_PORT: ${RUST_PORT}
       RUST_LOG: ${RUST_LOG}
+      AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
+      AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
+      AWS_REGION: ${AWS_REGION}
+      AWS_S3_BUCKET: ${AWS_S3_BUCKET}
     ports:
       - ${RUST_PORT}:${RUST_PORT}
     volumes:

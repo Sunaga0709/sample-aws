@@ -1,1 +1,1 @@
-pub mod aws_v1;
+pub mod sample_aws_v1;

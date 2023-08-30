@@ -1,15 +1,14 @@
 // @generated
 /// Generated client implementations.
-pub mod aws_service_client {
+pub mod sample_aws_service_client {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
     use tonic::codegen::http::Uri;
-    ///
     #[derive(Debug, Clone)]
-    pub struct AwsServiceClient<T> {
+    pub struct SampleAwsServiceClient<T> {
         inner: tonic::client::Grpc<T>,
     }
-    impl AwsServiceClient<tonic::transport::Channel> {
+    impl SampleAwsServiceClient<tonic::transport::Channel> {
         /// Attempt to create a new client by connecting to a given endpoint.
         pub async fn connect<D>(dst: D) -> Result<Self, tonic::transport::Error>
         where
@@ -20,7 +19,7 @@ pub mod aws_service_client {
             Ok(Self::new(conn))
         }
     }
-    impl<T> AwsServiceClient<T>
+    impl<T> SampleAwsServiceClient<T>
     where
         T: tonic::client::GrpcService<tonic::body::BoxBody>,
         T::Error: Into<StdError>,
@@ -38,7 +37,7 @@ pub mod aws_service_client {
         pub fn with_interceptor<F>(
             inner: T,
             interceptor: F,
-        ) -> AwsServiceClient<InterceptedService<T, F>>
+        ) -> SampleAwsServiceClient<InterceptedService<T, F>>
         where
             F: tonic::service::Interceptor,
             T::ResponseBody: Default,
@@ -52,7 +51,7 @@ pub mod aws_service_client {
                 http::Request<tonic::body::BoxBody>,
             >>::Error: Into<StdError> + Send + Sync,
         {
-            AwsServiceClient::new(InterceptedService::new(inner, interceptor))
+            SampleAwsServiceClient::new(InterceptedService::new(inner, interceptor))
         }
         /// Compress requests with the given encoding.
         ///
@@ -85,7 +84,6 @@ pub mod aws_service_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        ///
         pub async fn test_method(
             &mut self,
             request: impl tonic::IntoRequest<super::TestMethodRequest>,
@@ -104,23 +102,49 @@ pub mod aws_service_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/aws.v1.AwsService/TestMethod",
+                "/sample_aws.v1.SampleAwsService/TestMethod",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("aws.v1.AwsService", "TestMethod"));
+                .insert(GrpcMethod::new("sample_aws.v1.SampleAwsService", "TestMethod"));
+            self.inner.unary(req, path, codec).await
+        }
+        pub async fn upload_image(
+            &mut self,
+            request: impl tonic::IntoRequest<super::UploadImageRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::UploadImageResponse>,
+            tonic::Status,
+        > {
+            self.inner
+                .ready()
+                .await
+                .map_err(|e| {
+                    tonic::Status::new(
+                        tonic::Code::Unknown,
+                        format!("Service was not ready: {}", e.into()),
+                    )
+                })?;
+            let codec = tonic::codec::ProstCodec::default();
+            let path = http::uri::PathAndQuery::from_static(
+                "/sample_aws.v1.SampleAwsService/UploadImage",
+            );
+            let mut req = request.into_request();
+            req.extensions_mut()
+                .insert(
+                    GrpcMethod::new("sample_aws.v1.SampleAwsService", "UploadImage"),
+                );
             self.inner.unary(req, path, codec).await
         }
     }
 }
 /// Generated server implementations.
-pub mod aws_service_server {
+pub mod sample_aws_service_server {
     #![allow(unused_variables, dead_code, missing_docs, clippy::let_unit_value)]
     use tonic::codegen::*;
-    /// Generated trait containing gRPC methods that should be implemented for use with AwsServiceServer.
+    /// Generated trait containing gRPC methods that should be implemented for use with SampleAwsServiceServer.
     #[async_trait]
-    pub trait AwsService: Send + Sync + 'static {
-        ///
+    pub trait SampleAwsService: Send + Sync + 'static {
         async fn test_method(
             &self,
             request: tonic::Request<super::TestMethodRequest>,
@@ -128,10 +152,16 @@ pub mod aws_service_server {
             tonic::Response<super::TestMethodResponse>,
             tonic::Status,
         >;
+        async fn upload_image(
+            &self,
+            request: tonic::Request<super::UploadImageRequest>,
+        ) -> std::result::Result<
+            tonic::Response<super::UploadImageResponse>,
+            tonic::Status,
+        >;
     }
-    ///
     #[derive(Debug)]
-    pub struct AwsServiceServer<T: AwsService> {
+    pub struct SampleAwsServiceServer<T: SampleAwsService> {
         inner: _Inner<T>,
         accept_compression_encodings: EnabledCompressionEncodings,
         send_compression_encodings: EnabledCompressionEncodings,
@@ -139,7 +169,7 @@ pub mod aws_service_server {
         max_encoding_message_size: Option<usize>,
     }
     struct _Inner<T>(Arc<T>);
-    impl<T: AwsService> AwsServiceServer<T> {
+    impl<T: SampleAwsService> SampleAwsServiceServer<T> {
         pub fn new(inner: T) -> Self {
             Self::from_arc(Arc::new(inner))
         }
@@ -191,9 +221,9 @@ pub mod aws_service_server {
             self
         }
     }
-    impl<T, B> tonic::codegen::Service<http::Request<B>> for AwsServiceServer<T>
+    impl<T, B> tonic::codegen::Service<http::Request<B>> for SampleAwsServiceServer<T>
     where
-        T: AwsService,
+        T: SampleAwsService,
         B: Body + Send + 'static,
         B::Error: Into<StdError> + Send + 'static,
     {
@@ -209,11 +239,11 @@ pub mod aws_service_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/aws.v1.AwsService/TestMethod" => {
+                "/sample_aws.v1.SampleAwsService/TestMethod" => {
                     #[allow(non_camel_case_types)]
-                    struct TestMethodSvc<T: AwsService>(pub Arc<T>);
+                    struct TestMethodSvc<T: SampleAwsService>(pub Arc<T>);
                     impl<
-                        T: AwsService,
+                        T: SampleAwsService,
                     > tonic::server::UnaryService<super::TestMethodRequest>
                     for TestMethodSvc<T> {
                         type Response = super::TestMethodResponse;
@@ -253,6 +283,52 @@ pub mod aws_service_server {
                     };
                     Box::pin(fut)
                 }
+                "/sample_aws.v1.SampleAwsService/UploadImage" => {
+                    #[allow(non_camel_case_types)]
+                    struct UploadImageSvc<T: SampleAwsService>(pub Arc<T>);
+                    impl<
+                        T: SampleAwsService,
+                    > tonic::server::UnaryService<super::UploadImageRequest>
+                    for UploadImageSvc<T> {
+                        type Response = super::UploadImageResponse;
+                        type Future = BoxFuture<
+                            tonic::Response<Self::Response>,
+                            tonic::Status,
+                        >;
+                        fn call(
+                            &mut self,
+                            request: tonic::Request<super::UploadImageRequest>,
+                        ) -> Self::Future {
+                            let inner = Arc::clone(&self.0);
+                            let fut = async move {
+                                (*inner).upload_image(request).await
+                            };
+                            Box::pin(fut)
+                        }
+                    }
+                    let accept_compression_encodings = self.accept_compression_encodings;
+                    let send_compression_encodings = self.send_compression_encodings;
+                    let max_decoding_message_size = self.max_decoding_message_size;
+                    let max_encoding_message_size = self.max_encoding_message_size;
+                    let inner = self.inner.clone();
+                    let fut = async move {
+                        let inner = inner.0;
+                        let method = UploadImageSvc(inner);
+                        let codec = tonic::codec::ProstCodec::default();
+                        let mut grpc = tonic::server::Grpc::new(codec)
+                            .apply_compression_config(
+                                accept_compression_encodings,
+                                send_compression_encodings,
+                            )
+                            .apply_max_message_size_config(
+                                max_decoding_message_size,
+                                max_encoding_message_size,
+                            );
+                        let res = grpc.unary(method, req).await;
+                        Ok(res)
+                    };
+                    Box::pin(fut)
+                }
                 _ => {
                     Box::pin(async move {
                         Ok(
@@ -268,7 +344,7 @@ pub mod aws_service_server {
             }
         }
     }
-    impl<T: AwsService> Clone for AwsServiceServer<T> {
+    impl<T: SampleAwsService> Clone for SampleAwsServiceServer<T> {
         fn clone(&self) -> Self {
             let inner = self.inner.clone();
             Self {
@@ -280,7 +356,7 @@ pub mod aws_service_server {
             }
         }
     }
-    impl<T: AwsService> Clone for _Inner<T> {
+    impl<T: SampleAwsService> Clone for _Inner<T> {
         fn clone(&self) -> Self {
             Self(Arc::clone(&self.0))
         }
@@ -290,7 +366,7 @@ pub mod aws_service_server {
             write!(f, "{:?}", self.0)
         }
     }
-    impl<T: AwsService> tonic::server::NamedService for AwsServiceServer<T> {
-        const NAME: &'static str = "aws.v1.AwsService";
+    impl<T: SampleAwsService> tonic::server::NamedService for SampleAwsServiceServer<T> {
+        const NAME: &'static str = "sample_aws.v1.SampleAwsService";
     }
 }
