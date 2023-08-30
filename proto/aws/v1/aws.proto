@@ -3,13 +3,13 @@ syntax = "proto3";
 package sample_aws.v1;
 
 service SampleAwsService {
-	rpc TestMethod(TestMethodRequest) returns (TestMethodResponse);
+	rpc ExampleMethod(ExampleMethodRequest) returns (ExampleMethodResponse);
 	rpc UploadImage(UploadImageRequest) returns (UploadImageResponse);
 }
 
-message TestMethodRequest {}
+message ExampleMethodRequest {}
 
-message TestMethodResponse {}
+message ExampleMethodResponse {}
 
 message UploadImageRequest {
 	string name = 1;

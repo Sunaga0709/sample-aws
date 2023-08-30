@@ -1,5 +1,5 @@
 // @generated
-impl serde::Serialize for TestMethodRequest {
+impl serde::Serialize for ExampleMethodRequest {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
@@ -7,11 +7,11 @@ impl serde::Serialize for TestMethodRequest {
     {
         use serde::ser::SerializeStruct;
         let len = 0;
-        let struct_ser = serializer.serialize_struct("sample_aws.v1.TestMethodRequest", len)?;
+        let struct_ser = serializer.serialize_struct("sample_aws.v1.ExampleMethodRequest", len)?;
         struct_ser.end()
     }
 }
-impl<'de> serde::Deserialize<'de> for TestMethodRequest {
+impl<'de> serde::Deserialize<'de> for ExampleMethodRequest {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
     where
@@ -50,27 +50,27 @@ impl<'de> serde::Deserialize<'de> for TestMethodRequest {
         }
         struct GeneratedVisitor;
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = TestMethodRequest;
+            type Value = ExampleMethodRequest;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct sample_aws.v1.TestMethodRequest")
+                formatter.write_str("struct sample_aws.v1.ExampleMethodRequest")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<TestMethodRequest, V::Error>
+            fn visit_map<V>(self, mut map: V) -> std::result::Result<ExampleMethodRequest, V::Error>
                 where
                     V: serde::de::MapAccess<'de>,
             {
                 while map.next_key::<GeneratedField>()?.is_some() {
                     let _ = map.next_value::<serde::de::IgnoredAny>()?;
                 }
-                Ok(TestMethodRequest {
+                Ok(ExampleMethodRequest {
                 })
             }
         }
-        deserializer.deserialize_struct("sample_aws.v1.TestMethodRequest", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("sample_aws.v1.ExampleMethodRequest", FIELDS, GeneratedVisitor)
     }
 }
-impl serde::Serialize for TestMethodResponse {
+impl serde::Serialize for ExampleMethodResponse {
     #[allow(deprecated)]
     fn serialize<S>(&self, serializer: S) -> std::result::Result<S::Ok, S::Error>
     where
@@ -78,11 +78,11 @@ impl serde::Serialize for TestMethodResponse {
     {
         use serde::ser::SerializeStruct;
         let len = 0;
-        let struct_ser = serializer.serialize_struct("sample_aws.v1.TestMethodResponse", len)?;
+        let struct_ser = serializer.serialize_struct("sample_aws.v1.ExampleMethodResponse", len)?;
         struct_ser.end()
     }
 }
-impl<'de> serde::Deserialize<'de> for TestMethodResponse {
+impl<'de> serde::Deserialize<'de> for ExampleMethodResponse {
     #[allow(deprecated)]
     fn deserialize<D>(deserializer: D) -> std::result::Result<Self, D::Error>
     where
@@ -121,24 +121,24 @@ impl<'de> serde::Deserialize<'de> for TestMethodResponse {
         }
         struct GeneratedVisitor;
         impl<'de> serde::de::Visitor<'de> for GeneratedVisitor {
-            type Value = TestMethodResponse;
+            type Value = ExampleMethodResponse;
 
             fn expecting(&self, formatter: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-                formatter.write_str("struct sample_aws.v1.TestMethodResponse")
+                formatter.write_str("struct sample_aws.v1.ExampleMethodResponse")
             }
 
-            fn visit_map<V>(self, mut map: V) -> std::result::Result<TestMethodResponse, V::Error>
+            fn visit_map<V>(self, mut map: V) -> std::result::Result<ExampleMethodResponse, V::Error>
                 where
                     V: serde::de::MapAccess<'de>,
             {
                 while map.next_key::<GeneratedField>()?.is_some() {
                     let _ = map.next_value::<serde::de::IgnoredAny>()?;
                 }
-                Ok(TestMethodResponse {
+                Ok(ExampleMethodResponse {
                 })
             }
         }
-        deserializer.deserialize_struct("sample_aws.v1.TestMethodResponse", FIELDS, GeneratedVisitor)
+        deserializer.deserialize_struct("sample_aws.v1.ExampleMethodResponse", FIELDS, GeneratedVisitor)
     }
 }
 impl serde::Serialize for UploadImageRequest {

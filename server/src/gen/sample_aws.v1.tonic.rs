@@ -84,11 +84,11 @@ pub mod sample_aws_service_client {
             self.inner = self.inner.max_encoding_message_size(limit);
             self
         }
-        pub async fn test_method(
+        pub async fn example_method(
             &mut self,
-            request: impl tonic::IntoRequest<super::TestMethodRequest>,
+            request: impl tonic::IntoRequest<super::ExampleMethodRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::TestMethodResponse>,
+            tonic::Response<super::ExampleMethodResponse>,
             tonic::Status,
         > {
             self.inner
@@ -102,11 +102,13 @@ pub mod sample_aws_service_client {
                 })?;
             let codec = tonic::codec::ProstCodec::default();
             let path = http::uri::PathAndQuery::from_static(
-                "/sample_aws.v1.SampleAwsService/TestMethod",
+                "/sample_aws.v1.SampleAwsService/ExampleMethod",
             );
             let mut req = request.into_request();
             req.extensions_mut()
-                .insert(GrpcMethod::new("sample_aws.v1.SampleAwsService", "TestMethod"));
+                .insert(
+                    GrpcMethod::new("sample_aws.v1.SampleAwsService", "ExampleMethod"),
+                );
             self.inner.unary(req, path, codec).await
         }
         pub async fn upload_image(
@@ -145,11 +147,11 @@ pub mod sample_aws_service_server {
     /// Generated trait containing gRPC methods that should be implemented for use with SampleAwsServiceServer.
     #[async_trait]
     pub trait SampleAwsService: Send + Sync + 'static {
-        async fn test_method(
+        async fn example_method(
             &self,
-            request: tonic::Request<super::TestMethodRequest>,
+            request: tonic::Request<super::ExampleMethodRequest>,
         ) -> std::result::Result<
-            tonic::Response<super::TestMethodResponse>,
+            tonic::Response<super::ExampleMethodResponse>,
             tonic::Status,
         >;
         async fn upload_image(
@@ -239,24 +241,26 @@ pub mod sample_aws_service_server {
         fn call(&mut self, req: http::Request<B>) -> Self::Future {
             let inner = self.inner.clone();
             match req.uri().path() {
-                "/sample_aws.v1.SampleAwsService/TestMethod" => {
+                "/sample_aws.v1.SampleAwsService/ExampleMethod" => {
                     #[allow(non_camel_case_types)]
-                    struct TestMethodSvc<T: SampleAwsService>(pub Arc<T>);
+                    struct ExampleMethodSvc<T: SampleAwsService>(pub Arc<T>);
                     impl<
                         T: SampleAwsService,
-                    > tonic::server::UnaryService<super::TestMethodRequest>
-                    for TestMethodSvc<T> {
-                        type Response = super::TestMethodResponse;
+                    > tonic::server::UnaryService<super::ExampleMethodRequest>
+                    for ExampleMethodSvc<T> {
+                        type Response = super::ExampleMethodResponse;
                         type Future = BoxFuture<
                             tonic::Response<Self::Response>,
                             tonic::Status,
                         >;
                         fn call(
                             &mut self,
-                            request: tonic::Request<super::TestMethodRequest>,
+                            request: tonic::Request<super::ExampleMethodRequest>,
                         ) -> Self::Future {
                             let inner = Arc::clone(&self.0);
-                            let fut = async move { (*inner).test_method(request).await };
+                            let fut = async move {
+                                (*inner).example_method(request).await
+                            };
                             Box::pin(fut)
                         }
                     }
@@ -267,7 +271,7 @@ pub mod sample_aws_service_server {
                     let inner = self.inner.clone();
                     let fut = async move {
                         let inner = inner.0;
-                        let method = TestMethodSvc(inner);
+                        let method = ExampleMethodSvc(inner);
                         let codec = tonic::codec::ProstCodec::default();
                         let mut grpc = tonic::server::Grpc::new(codec)
                             .apply_compression_config(

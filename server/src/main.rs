@@ -13,8 +13,9 @@ use crate::config::environment::Config;
 use crate::gateway::aws_s3::AwsS3;
 use crate::gateway::example::ExampleRepoImpl;
 use crate::gen::sample_aws_v1::sample_aws_service_server::SampleAwsServiceServer;
-use crate::service::sample_aws::Aws;
-use crate::usecase::sample_aws::SampleAwsUsecase;
+use crate::service::Aws;
+use crate::usecase::aws::AwsUsecase;
+use crate::usecase::example::ExampleUsecase;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -22,11 +23,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let conf: Config = Config::init();
     let pool: sqlx::Pool<sqlx::MySql> = conf.init_db().await;
     let aws_service: SampleAwsServiceServer<Aws<ExampleRepoImpl, AwsS3>> =
-        SampleAwsServiceServer::new(Aws::new(SampleAwsUsecase::new(
-            ExampleRepoImpl::new(),
-            AwsS3::new(&conf.aws_config().await, conf.s3_bucket_name()),
-            pool,
-        )));
+        SampleAwsServiceServer::new(Aws::new(
+            AwsUsecase::new(AwsS3::new(&conf.aws_config().await, conf.s3_bucket_name())),
+            ExampleUsecase::new(ExampleRepoImpl::new(), pool.clone()),
+        ));
 
     log::info!("start server");
     Server::builder()
