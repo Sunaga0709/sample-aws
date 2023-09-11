@@ -1,2 +1,3 @@
-pub mod aws;
+pub mod auth;
 pub mod example;
+pub mod image;

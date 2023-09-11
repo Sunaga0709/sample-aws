@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package auth_sample_aws.v1;
+
+service AuthSampleAwsService {
+	rpc SignUp(SignUpRequest) returns (SignUpResponse);
+}
+
+message SignUpRequest {
+	string name = 1;
+	string email = 2;
+	int64 birthday = 3;
+	string password = 4;
+	string password_confirm = 5;
+}
+
+message SignUpResponse {}

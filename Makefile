@@ -6,9 +6,16 @@ up:
 	docker-compose up -d
 down:
 	docker-compose down
+rebuild:
+	@make down
+	@make build
+	@make up
+restart:
+	@make down
+	@make up
 ps:
 	docker-compose ps
-cargo-add-crate:
+cargo-add:
 	docker-compose exec app cargo add ${name}
 cargo-build:
 	docker-compose exec app cargo build
@@ -30,10 +37,10 @@ cargo-run:
 cargo-test:
 	docker-compose exec app cargo test -- --nocapture
 migrate-create:
-	docker-compose exec app sqlx migrate add ${name}
+	docker-compose exec migrate sqlx migrate add ${name}
 migrate:
-	docker-compose exec app sqlx migrate run
+	docker-compose exec migrate sqlx migrate run
 .PHONY: proto
 proto:
-	rm -f server/src/gen/aws.*
+	rm -f server/src/gen/*
 	buf generate

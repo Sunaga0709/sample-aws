@@ -3,14 +3,14 @@ use crate::domain::model::image::Image as ImageModel;
 use crate::domain::repository::cloud_stroage::CloudStorageRepository;
 
 #[derive(Debug)]
-pub struct AwsUsecase<CS>
+pub struct ImageUsecase<CS>
 where
     CS: CloudStorageRepository + Send + Sync,
 {
     cs_repo: CS,
 }
 
-impl<CS> AwsUsecase<CS>
+impl<CS> ImageUsecase<CS>
 where
     CS: CloudStorageRepository + Send + Sync,
 {

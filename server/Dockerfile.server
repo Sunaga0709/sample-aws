@@ -23,7 +23,6 @@ COPY ./src ./src
 FROM common AS dev
 RUN rustup component add rustfmt
 RUN rustup component add clippy
-RUN cargo install sqlx-cli
 
 # FROM common as builder
 # RUN cargo build --release

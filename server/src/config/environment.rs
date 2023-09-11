@@ -9,6 +9,9 @@ pub struct Config {
     db_url: String,
     port: String,
     aws_s3_bucket: String,
+    aws_cognito_user_pool_id: String,
+    aws_cognito_app_client_id: String,
+    aws_cognito_app_client_secret: String,
 }
 
 impl Config {
@@ -18,6 +21,12 @@ impl Config {
             port: env::var("RUST_PORT").expect("Config::init failed to load RUST_PORT"),
             aws_s3_bucket: env::var("AWS_S3_BUCKET")
                 .expect("Config::init failed to load AWS_S3_BUCKET"),
+            aws_cognito_user_pool_id: env::var("AWS_COGNITO_USER_POOL_ID")
+                .expect("Config::init failed to load AWS_COGNITO_USER_POOL_ID"),
+            aws_cognito_app_client_id: env::var("AWS_COGNITO_APP_CLIENT_ID")
+                .expect("Config::init failed to load AWS_COGNITO_APP_CLIENT_ID"),
+            aws_cognito_app_client_secret: env::var("AWS_COGNITO_APP_CLIENT_SECRET")
+                .expect("Config::init failed to load AWS_COGNITO_APP_CLIENT_SECRET"),
         }
     }
 
@@ -37,6 +46,18 @@ impl Config {
 
     pub fn s3_bucket_name(&self) -> &str {
         &self.aws_s3_bucket
+    }
+
+    pub fn user_pool_id(&self) -> &str {
+        &self.aws_cognito_user_pool_id
+    }
+
+    pub fn app_client_id(&self) -> &str {
+        &self.aws_cognito_app_client_id
+    }
+
+    pub fn app_client_secret(&self) -> &str {
+        &self.aws_cognito_app_client_secret
     }
 
     pub fn api_url(&self) -> SocketAddr {

@@ -6,10 +6,10 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-prost = "0.11.8"
+prost = "0.12.0"
 serde = { version = "1.0.155", features = ["derive"] }
 tokio = { version = "1.26.0", features = ["rt-multi-thread", "rt", "macros", "sync", "signal"] }
-tonic = "0.9.1"
+tonic = "0.10.0"
 dotenv = "0.15.0"
 log = "0.4.17"
 pbjson = "0.5.1"
@@ -26,3 +26,6 @@ aws-sdk-cognitoidentityprovider = "0.30.0"
 aws-sdk-s3 = "0.30.0"
 aws-types = "0.56.1"
 base64 = "0.21.3"
+hmac = "0.12.1"
+sha2 = "0.10.7"
+tonic-reflection = "0.10.0"

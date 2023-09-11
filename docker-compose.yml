@@ -3,7 +3,7 @@ services:
   app:
     build:
       context: server
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.server
     environment:
       DATABASE_URL: ${DATABASE_URL}
       RUST_PORT: ${RUST_PORT}
@@ -12,8 +12,23 @@ services:
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
       AWS_REGION: ${AWS_REGION}
       AWS_S3_BUCKET: ${AWS_S3_BUCKET}
+      AWS_COGNITO_USER_POOL_ID: ${AWS_COGNITO_USER_POOL_ID}
+      AWS_COGNITO_APP_CLIENT_ID: ${AWS_COGNITO_APP_CLIENT_ID}
+      AWS_COGNITO_APP_CLIENT_SECRET: ${AWS_COGNITO_APP_CLIENT_SECRET}
     ports:
       - ${RUST_PORT}:${RUST_PORT}
+    volumes:
+      - ./server:/app
+    depends_on:
+      - db
+    tty: true
+
+  migrate:
+    build:
+      context: server
+      dockerfile: Dockerfile.migrate
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
     volumes:
       - ./server:/app
     depends_on:
