@@ -78,7 +78,7 @@ impl AuthSampleAwsService for AuthService<AwsCognito, UserRepoImpl> {
 
                 let mut res: Response<SignUpResponse> = Response::new(SignUpResponse {});
                 let md: &mut MetadataMap = res.metadata_mut();
-                md.insert("session_bin", md_session);
+                md.insert("session", md_session);
                 md.insert("access_token", md_acccess);
                 md.insert("refresh_token", md_refresh);
                 md.insert("expires_in", md_expires_in);
