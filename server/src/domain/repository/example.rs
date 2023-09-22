@@ -1,6 +1,6 @@
 use async_trait::async_trait;
-use sqlx::Any;
 use sqlx::Acquire;
+use sqlx::Any;
 
 use crate::apperror::error::AppError;
 use crate::domain::model::example::Example as ExampleModel;

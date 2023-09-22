@@ -1,5 +1,5 @@
+use super::mail;
 use crate::apperror::error::AppError;
-use crate::util::mail;
 
 const MIN_PASSWORD_LENGTH: usize = 7;
 

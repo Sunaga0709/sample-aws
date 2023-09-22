@@ -1,10 +1,9 @@
 use aws_config::meta::region::RegionProviderChain;
 use aws_types::SdkConfig;
-use sqlx::Any;
-use sqlx::any::AnyPoolOptions;
-use sqlx::Pool;
 use sqlx::any::install_default_drivers;
-use sqlx::any::install_drivers;
+use sqlx::any::AnyPoolOptions;
+use sqlx::Any;
+use sqlx::Pool;
 use std::env;
 use std::net::SocketAddr;
 

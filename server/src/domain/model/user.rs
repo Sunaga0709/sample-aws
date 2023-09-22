@@ -1,9 +1,9 @@
 use sqlx::FromRow;
 
+use super::datetime;
+use super::mail;
+use super::uuid;
 use crate::apperror::error::AppError;
-use crate::util::datetime;
-use crate::util::mail;
-use crate::util::uuid;
 
 #[derive(Clone, Debug, FromRow)]
 pub struct User {

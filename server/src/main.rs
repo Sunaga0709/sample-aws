@@ -9,7 +9,6 @@ mod gateway;
 mod gen;
 mod service;
 mod usecase;
-mod util;
 
 use crate::auth_service::AuthService;
 use crate::config::environment::Config;

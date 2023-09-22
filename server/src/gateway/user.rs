@@ -1,11 +1,11 @@
 use async_trait::async_trait;
-use sqlx::Any;
 use sqlx::Acquire;
+use sqlx::Any;
 
 use crate::apperror::error::AppError;
 use crate::domain::model::user::User as UserModel;
+use crate::domain::model::vector;
 use crate::domain::repository::user::UserRepository;
-use crate::util::vector;
 
 #[derive(Debug)]
 pub struct UserRepoImpl;
