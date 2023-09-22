@@ -39,10 +39,10 @@ impl SampleAwsService for SampleAws<ExampleRepoImpl, AwsS3> {
         &self,
         req: Request<ExampleMethodRequest>,
     ) -> Result<Response<ExampleMethodResponse>, Status> {
-        // dbg!(req);
-        let md: &tonic::metadata::MetadataMap = req.metadata();
-        let header = md.clone().into_headers();
-        dbg!(&header["content-type"]);
+        let (md, ext, param) = req.into_parts();
+        dbg!(md);
+        dbg!(ext);
+        dbg!(param);
 
         match self.example_uc.example().await {
             Ok(_) => {

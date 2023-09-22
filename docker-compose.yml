@@ -5,8 +5,8 @@ services:
       context: server
       dockerfile: Dockerfile.server
     environment:
-      DATABASE_URL: ${DATABASE_URL}
-      RUST_PORT: ${RUST_PORT}
+      DATABASE_URL: "${DB_DRIVER}://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
+      RUST_PORT: ${APP_PORT}
       RUST_LOG: ${RUST_LOG}
       AWS_ACCESS_KEY_ID: ${AWS_ACCESS_KEY_ID}
       AWS_SECRET_ACCESS_KEY: ${AWS_SECRET_ACCESS_KEY}
@@ -16,7 +16,7 @@ services:
       AWS_COGNITO_APP_CLIENT_ID: ${AWS_COGNITO_APP_CLIENT_ID}
       AWS_COGNITO_APP_CLIENT_SECRET: ${AWS_COGNITO_APP_CLIENT_SECRET}
     ports:
-      - ${RUST_PORT}:${RUST_PORT}
+      - ${APP_PORT}:${APP_PORT}
     volumes:
       - ./server:/app
     depends_on:
@@ -28,12 +28,33 @@ services:
       context: server
       dockerfile: Dockerfile.migrate
     environment:
-      DATABASE_URL: ${DATABASE_URL}
+      DATABASE_URL: "${DB_DRIVER}://${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}"
     volumes:
       - ./server:/app
     depends_on:
       - db
     tty: true
+
+  # envoy:
+  #   build:
+  #     context: envoy
+  #     dockerfile: Dockerfile
+  #   environment:
+  #     ADMIN_ENVOY_PORT: ${ADMIN_ENVOY_PORT}
+  #     ENVOY_PORT: ${ENVOY_PORT}
+  #     APP_HOST: ${APP_HOST}
+  #     APP_PORT: ${APP_PORT}
+  #   ports:
+  #     - ${ADMIN_ENVOY_PORT}:${ADMIN_ENVOY_PORT}
+  #     - ${ENVOY_PORT}:${ENVOY_PORT}
+  #   volumes:
+  #     - ./envoy/log/admin_access.log:/tmp/admin_access.log
+  #     - ./envoy/log/envoy.log:/tmp/envoy.log
+  #   command: 
+  #     - "--config-path /etc/envoy/envoy.yaml"
+  #   depends_on:
+  #     - app
+  #   tty: true
 
   db:
     image: mysql:8

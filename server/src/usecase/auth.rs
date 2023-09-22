@@ -1,4 +1,4 @@
-use sqlx::mysql::MySqlPool;
+use sqlx::{Any, Pool};
 
 use crate::apperror::error::AppError;
 use crate::domain::model::auth::{EmailAndPass, Token};
@@ -14,7 +14,7 @@ where
 {
     auth_repo: AR,
     user_repo: UR,
-    pool: MySqlPool,
+    pool: Pool<Any>,
 }
 
 impl<AR, UR> AuthUsecase<AR, UR>
@@ -22,7 +22,7 @@ where
     AR: AuthRepository + Send + Sync,
     UR: UserRepository + Send + Sync,
 {
-    pub fn new(auth_repo: AR, user_repo: UR, pool: MySqlPool) -> Self {
+    pub fn new(auth_repo: AR, user_repo: UR, pool: Pool<Any>) -> Self {
         Self {
             auth_repo,
             user_repo,

@@ -1,4 +1,4 @@
-use sqlx::mysql::MySqlPool;
+use sqlx::{Any, Pool};
 
 use crate::apperror::error::AppError;
 use crate::domain::model::example::Example as ExampleModel;
@@ -10,14 +10,14 @@ where
     ER: ExampleRepository + Send + Sync,
 {
     example_repo: ER,
-    pool: MySqlPool,
+    pool: Pool<Any>,
 }
 
 impl<ER> ExampleUsecase<ER>
 where
     ER: ExampleRepository + Send + Sync,
 {
-    pub fn new(example_repo: ER, pool: MySqlPool) -> Self {
+    pub fn new(example_repo: ER, pool: Pool<Any>) -> Self {
         Self { example_repo, pool }
     }
 

@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use sqlx::mysql::MySql;
+use sqlx::Any;
 use sqlx::Acquire;
 
 use crate::apperror::error::AppError;
@@ -18,7 +18,7 @@ impl UserRepoImpl {
 
 #[async_trait]
 impl UserRepository for UserRepoImpl {
-    async fn get<'a, A: Acquire<'a, Database = MySql> + Send + Sync>(
+    async fn get<'a, A: Acquire<'a, Database = Any> + Send + Sync>(
         &self,
         acq: A,
         user_id: &str,
@@ -58,7 +58,7 @@ impl UserRepository for UserRepoImpl {
         Ok(vector::first(&rows))
     }
 
-    async fn get_by_email<'a, A: Acquire<'a, Database = MySql> + Send + Sync>(
+    async fn get_by_email<'a, A: Acquire<'a, Database = Any> + Send + Sync>(
         &self,
         acq: A,
         email: &str,
@@ -98,7 +98,7 @@ impl UserRepository for UserRepoImpl {
         Ok(vector::first(&rows))
     }
 
-    async fn create<'a, A: Acquire<'a, Database = MySql> + Send + Sync>(
+    async fn create<'a, A: Acquire<'a, Database = Any> + Send + Sync>(
         &self,
         acq: A,
         user: &UserModel,

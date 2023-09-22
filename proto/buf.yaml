@@ -1,0 +1,7 @@
+version: v1
+name: buf.build/sunaga0709/sample-aws
+breaking:
+  use:
+  - FILE
+deps:
+  - buf.build/googleapis/googleapis

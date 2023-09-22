@@ -1,7 +1,10 @@
 use aws_config::meta::region::RegionProviderChain;
 use aws_types::SdkConfig;
-use sqlx::mysql::MySqlPool;
-use sqlx::mysql::MySqlPoolOptions;
+use sqlx::Any;
+use sqlx::any::AnyPoolOptions;
+use sqlx::Pool;
+use sqlx::any::install_default_drivers;
+use sqlx::any::install_drivers;
 use std::env;
 use std::net::SocketAddr;
 
@@ -30,8 +33,9 @@ impl Config {
         }
     }
 
-    pub async fn init_db(&self) -> MySqlPool {
-        MySqlPoolOptions::new()
+    pub async fn init_db(&self) -> Pool<Any> {
+        install_default_drivers();
+        AnyPoolOptions::new()
             .max_connections(255)
             .connect(&self.db_url)
             .await

@@ -30,7 +30,7 @@ use crate::usecase::image::ImageUsecase;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     env_logger::init();
     let conf: Config = Config::init();
-    let pool: sqlx::Pool<sqlx::MySql> = conf.init_db().await;
+    let pool: sqlx::Pool<sqlx::Any> = conf.init_db().await;
 
     let auth_service: AuthSampleAwsServiceServer<AuthService<AwsCognito, UserRepoImpl>> =
         AuthSampleAwsServiceServer::new(AuthService::new(AuthUsecase::new(
@@ -54,7 +54,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         .register_encoded_file_descriptor_set(AUTH_FILE_DESCRIPTOR_SET)
         .register_encoded_file_descriptor_set(FILE_DESCRIPTOR_SET)
         .build()
-        .expect("");
+        .expect("failed to build reflection service");
 
     log::info!("start server");
     Server::builder()

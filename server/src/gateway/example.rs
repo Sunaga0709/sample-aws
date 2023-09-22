@@ -1,5 +1,5 @@
 use async_trait::async_trait;
-use sqlx::mysql::MySql;
+use sqlx::Any;
 use sqlx::Acquire;
 
 use crate::apperror::error::AppError;
@@ -17,7 +17,7 @@ impl ExampleRepoImpl {
 
 #[async_trait]
 impl ExampleRepository for ExampleRepoImpl {
-    async fn create<'a, A: Acquire<'a, Database = MySql> + Send + Sync>(
+    async fn create<'a, A: Acquire<'a, Database = Any> + Send + Sync>(
         &self,
         acq: A,
         exm: &ExampleModel,
