@@ -44,7 +44,7 @@ impl SampleAwsService for SampleAws<ExampleRepoImpl, AwsS3> {
         dbg!(ext);
         dbg!(param);
 
-        match self.example_uc.example().await {
+        match self.example_uc.create().await {
             Ok(_) => {
                 let res: Response<ExampleMethodResponse> = Response::new(ExampleMethodResponse {});
                 dbg!(&res);
