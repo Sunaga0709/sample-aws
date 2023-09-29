@@ -7,7 +7,7 @@ use crate::domain::model::user::User as UserModel;
 use crate::domain::model::vector;
 use crate::domain::repository::user::UserRepository;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct UserRepoImpl;
 
 impl UserRepoImpl {

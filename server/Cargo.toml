@@ -40,3 +40,4 @@ ulid = "1.1.0"
 http = "0.2.9"
 tower = "0.4.13"
 futures = "0.3.28"
+cookie = { version = "0.17.0", features = ["secure"] }

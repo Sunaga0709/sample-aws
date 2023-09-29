@@ -3,13 +3,11 @@ use axum::Router;
 use http::Method;
 use sqlx::{Any, Pool};
 use tower_http::cors::CorsLayer;
-use tower_http::trace::TraceLayer;
-use tower_http::trace::{DefaultOnFailure, DefaultOnRequest, DefaultOnResponse};
-use tracing::Level;
 
 use crate::config::Config;
 use crate::dependency_injection;
 use crate::middleware::log::LogLayer;
+use crate::web::api::auth::sign_up;
 use crate::web::api::example::create_example;
 use crate::web::api::example::get_by_id_example;
 use crate::web::api::example::get_example;
@@ -39,9 +37,21 @@ pub async fn new_router(conf: &Config) -> Router {
             conf.s3_bucket_name(),
         ));
 
+    let auth_route: Router =
+        Router::new()
+            .route("/signup", post(sign_up))
+            .with_state(dependency_injection::di_auth(
+                &conf.aws_config().await,
+                conf.user_pool_id(),
+                conf.app_client_id(),
+                conf.app_client_secret(),
+                pool.clone(),
+            ));
+
     Router::new()
         .nest(VERSION1, example_route)
         .nest(VERSION1, image_route)
+        .nest(VERSION1, auth_route)
         .layer(cors)
         .layer(LogLayer)
 }

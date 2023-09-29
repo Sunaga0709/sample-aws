@@ -37,7 +37,7 @@ use crate::config::Config;
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     env_logger::init();
     let conf: Config = Config::init();
-    let pool: sqlx::Pool<sqlx::Any> = conf.init_db().await;
+    let _pool: sqlx::Pool<sqlx::Any> = conf.init_db().await;
 
     /* gRPC Services */
     // let auth_service: AuthSampleAwsServiceServer<AuthService<AwsCognito, UserRepoImpl>> =

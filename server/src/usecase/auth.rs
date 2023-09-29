@@ -6,7 +6,7 @@ use crate::domain::model::user::User as UserModel;
 use crate::domain::repository::auth::AuthRepository;
 use crate::domain::repository::user::UserRepository;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct AuthUsecase<AR, UR>
 where
     AR: AuthRepository + Send + Sync,

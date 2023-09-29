@@ -16,7 +16,7 @@ use crate::domain::model::auth::EmailAndPass;
 use crate::domain::model::auth::Token;
 use crate::domain::repository::auth::AuthRepository;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct AwsCognito {
     client: Client,
     user_pool_id: String,
@@ -65,7 +65,7 @@ impl AwsCognito {
         let mut attributes: Vec<AttributeType> = Vec::new();
 
         for (key, value) in params {
-            attributes.push(AttributeType::builder().name(key).value(value).build())
+            attributes.push(AttributeType::builder().name(key).value(value).build());
         }
 
         attributes
@@ -87,7 +87,7 @@ impl AwsCognito {
             None => {
                 return Err(AppError::new_internal(
                     "AwsCognito::set_token_to_model id token is none",
-                ))
+                ));
             }
         };
 
@@ -96,7 +96,7 @@ impl AwsCognito {
             None => {
                 return Err(AppError::new_internal(
                     "AwsCognito::set_token_to_model access token is none",
-                ))
+                ));
             }
         };
 
@@ -105,7 +105,7 @@ impl AwsCognito {
             None => {
                 return Err(AppError::new_internal(
                     "AwsCognito::set_token_to_model refresh token is none",
-                ))
+                ));
             }
         };
 
@@ -230,7 +230,7 @@ impl AuthRepository for AwsCognito {
             None => {
                 return Err(AppError::new_internal(
                     "AwsCognito::signin failed to signin",
-                ))
+                ));
             }
         }
     }
