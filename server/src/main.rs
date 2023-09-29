@@ -8,8 +8,8 @@ use axum::{Router, Server as AxumServer};
 mod apperror;
 mod auth_service;
 mod config;
-mod domain;
 mod dependency_injection;
+mod domain;
 mod gateway;
 mod gen;
 mod middleware;
@@ -65,7 +65,7 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     //     .expect("failed to build reflection service");
 
     /* REST Service */
-    let app: Router = route::new_router(pool);
+    let app: Router = route::new_router(&conf).await;
 
     tracing::info!("start server with port: {}", conf.port());
 

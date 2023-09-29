@@ -8,7 +8,7 @@ pub struct CreateResponse {}
 
 #[derive(Debug, Serialize)]
 pub struct GetResponse {
-    pub examples: Vec<DetailResponse>
+    pub examples: Vec<DetailResponse>,
 }
 
 #[derive(Debug, Serialize)]

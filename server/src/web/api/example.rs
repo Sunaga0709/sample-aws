@@ -1,34 +1,30 @@
-use axum::response::IntoResponse;
-use axum::Json;
 use axum::extract::Path;
 use axum::extract::State;
+use axum::response::IntoResponse;
+use axum::Json;
 
 use crate::apperror::error::AppError;
-use crate::usecase::example::ExampleUsecase;
-use crate::web::schema::example::{CreateRequest, CreateResponse};
-use crate::web::schema::example::GetResponse;
-use crate::web::schema::example::DetailResponse;
 use crate::gateway::example::ExampleRepoImpl;
+use crate::usecase::example::ExampleUsecase;
+use crate::web::schema::example::DetailResponse;
+use crate::web::schema::example::GetResponse;
+use crate::web::schema::example::{CreateRequest, CreateResponse};
 
 type UcState = State<ExampleUsecase<ExampleRepoImpl>>;
 
-pub async fn get_example(
-    State(uc): UcState,
-) -> Result<impl IntoResponse, AppError> {
+pub async fn get_example(State(uc): UcState) -> Result<impl IntoResponse, AppError> {
     match uc.get().await {
         Ok(result) => {
             let examples: Vec<DetailResponse> = result
-            .iter()
-            .map(|value| {
-                DetailResponse {
+                .iter()
+                .map(|value| DetailResponse {
                     example_id: value.example_id.clone(),
                     created_at: value.created_at,
-                }
-            })
-            .collect();
+                })
+                .collect();
 
             Ok(axum::Json(GetResponse { examples }))
-        },
+        }
         Err(err) => Err(err),
     }
 }

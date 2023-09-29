@@ -1,13 +1,11 @@
-use axum::response::{self, IntoResponse, Response as AxumResponse};
 use axum::http::StatusCode;
+use axum::response::{self, IntoResponse, Response as AxumResponse};
 use std::error::Error as StdError;
-use tonic::Status as TonicStatus;
 use tonic::Code::{
-    InvalidArgument as GrpcInvalidArgument,
-    NotFound as GrpcNotFound,
-    AlreadyExists as GrpcAlreadyExists,
-    Internal as GrpcInternal,
+    AlreadyExists as GrpcAlreadyExists, Internal as GrpcInternal,
+    InvalidArgument as GrpcInvalidArgument, NotFound as GrpcNotFound,
 };
+use tonic::Status as TonicStatus;
 
 use crate::web::schema::error_response::ErrorResponse;
 
@@ -129,7 +127,7 @@ impl IntoResponse for AppError {
         };
 
         let mut res: AxumResponse = response::Json(err_res).into_response();
-        *res.status_mut() = StatusCode::from(self.to_status_code());
+        *res.status_mut() = self.to_status_code();
         res.extensions_mut().insert(self);
 
         res

@@ -6,7 +6,7 @@ use crate::apperror::error::AppError;
 use crate::domain::model::image::Image as ImageModel;
 use crate::domain::repository::cloud_stroage::CloudStorageRepository;
 
-#[derive(Debug)]
+#[derive(Clone, Debug)]
 pub struct AwsS3 {
     client: S3Client,
     bucket: String,

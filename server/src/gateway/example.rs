@@ -17,11 +17,13 @@ impl ExampleRepoImpl {
 #[async_trait]
 impl ExampleRepository for ExampleRepoImpl {
     async fn get<'a, A: Acquire<'a, Database = Any> + Send + Sync>(
-        &self, acq: A,
+        &self,
+        acq: A,
     ) -> Result<Vec<ExampleModel>, AppError> {
         let mut conn: <A as Acquire>::Connection = acq.acquire().await.map_err(|err| {
             AppError::new_internal_with_error(
-                "ExampleRepoImpl::get failed to get database connection", &err,
+                "ExampleRepoImpl::get failed to get database connection",
+                &err,
             )
         })?;
 
@@ -37,18 +39,19 @@ impl ExampleRepository for ExampleRepoImpl {
         .fetch_all(&mut *conn)
         .await
         .map_err(|err| {
-            AppError::new_internal_with_error(
-                "ExampleRepoImpl::get failed to get example", &err,
-            )
+            AppError::new_internal_with_error("ExampleRepoImpl::get failed to get example", &err)
         })
     }
 
     async fn get_by_id<'a, A: Acquire<'a, Database = Any> + Send + Sync>(
-        &self, acq: A, id: &str
+        &self,
+        acq: A,
+        id: &str,
     ) -> Result<ExampleModel, AppError> {
         let mut conn: <A as Acquire>::Connection = acq.acquire().await.map_err(|err| {
             AppError::new_internal_with_error(
-                "ExampleRepoImpl::get_by_id failed to get database connection", &err,
+                "ExampleRepoImpl::get_by_id failed to get database connection",
+                &err,
             )
         })?;
 
@@ -61,7 +64,7 @@ impl ExampleRepository for ExampleRepoImpl {
                     example
                 WHERE
                     example_id = ?
-            "#
+            "#,
         )
         .bind(id)
         .fetch_one(&mut *conn)
@@ -69,16 +72,16 @@ impl ExampleRepository for ExampleRepoImpl {
 
         match result {
             Ok(example) => Ok(example),
-            Err(err) => {
-                match err {
-                    DBError::RowNotFound => Err(AppError::new_not_found_with_error(
-                        "ExampleRepoImpl::get_by_id example not found", &err,
-                    )),
-                    _ => Err(AppError::new_internal_with_error(
-                        "ExampleRepoImpl::get_by_id failed to get example", &err,
-                    )),
-                }
-            }
+            Err(err) => match err {
+                DBError::RowNotFound => Err(AppError::new_not_found_with_error(
+                    "ExampleRepoImpl::get_by_id example not found",
+                    &err,
+                )),
+                _ => Err(AppError::new_internal_with_error(
+                    "ExampleRepoImpl::get_by_id failed to get example",
+                    &err,
+                )),
+            },
         }
     }
 

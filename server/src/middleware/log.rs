@@ -1,10 +1,10 @@
 use futures::future::BoxFuture;
-use tower::{Layer, Service};
-use std::task::{Context, Poll};
 use hyper::{Request, Response};
-use ulid::Ulid;
 use serde_json::{json, Value};
-use std::time::{Instant, Duration};
+use std::task::{Context, Poll};
+use std::time::{Duration, Instant};
+use tower::{Layer, Service};
+use ulid::Ulid;
 
 use crate::apperror::error::AppError;
 
@@ -36,7 +36,6 @@ where
     }
 
     fn call(&mut self, req: Request<ReqB>) -> Self::Future {
-    // fn call(&mut self, req: Request<ReqB>) -> Result<Self::Response, Self::Error> {
         let start: Instant = Instant::now();
         let trace_id: String = Ulid::new().to_string();
 
@@ -48,8 +47,9 @@ where
             "body": format!("{:?}", req.body()),
         });
         tracing::info!("{}", request_log.to_string());
-        
+
         let fut: <S as Service<Request<ReqB>>>::Future = self.inner.call(req);
+
         Box::pin(async move {
             let result: Result<Response<ResB>, <S as Service<Request<ReqB>>>::Error> = fut.await;
             let duration: Duration = start.elapsed();
@@ -63,18 +63,18 @@ where
                             "body": format!("{:?}", res.body()),
                             "duration": format!("{:?}ns", duration.as_nanos()),
                         });
-                        tracing::info!("{:?}", response_log.to_string())
+                        tracing::info!("{}", response_log.to_string())
                     } else {
                         let error_log: Value = json!({
                             "trace_id": &trace_id,
                             "status_code": res.status().to_string(),
                             "header": format!("{:?}", res.headers()),
                             "body": format!("{:?}", res.body()),
-                            "error": format!("{:?}", res.extensions().get::<AppError>()),
+                            "error": format!("{:?}", res.extensions().get::<AppError>().unwrap_or(&AppError::Internal(String::from("unknown error")))),
                         });
-                        tracing::error!("{:?}", error_log)
+                        tracing::error!("{}", error_log)
                     }
-                },
+                }
                 Err(err) => tracing::error!("{:?}", &err),
             }
             result
