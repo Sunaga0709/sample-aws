@@ -14,6 +14,12 @@ impl ExampleRepoImpl {
     }
 }
 
+impl Default for ExampleRepoImpl {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 #[async_trait]
 impl ExampleRepository for ExampleRepoImpl {
     async fn get<'a, A: Acquire<'a, Database = Any> + Send + Sync>(

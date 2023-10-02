@@ -17,3 +17,9 @@ impl Example {
         }
     }
 }
+
+impl Default for Example {
+    fn default() -> Self {
+        Self::new()
+    }
+}
