@@ -32,8 +32,10 @@ cargo-fmt: # フォーマッタ
 cargo-lint: # リンター
 	@make cargo-fmt
 	docker-compose exec app cargo clippy
-cargo-run:
-	docker-compose exec app cargo run
+serve:
+	docker-compose exec app cargo run --bin server
+gen-doc:
+	docker-compose exec app cargo run --bin api-doc
 cargo-test:
 	docker-compose exec app cargo test -- --nocapture
 migrate-create:

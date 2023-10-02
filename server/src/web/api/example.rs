@@ -12,6 +12,17 @@ use crate::web::schema::example::{CreateRequest, CreateResponse};
 
 type UcState = State<ExampleUsecase<ExampleRepoImpl>>;
 
+/// Get examples
+///
+/// example document
+#[utoipa::path(
+    get,
+    path = "/v1/example",
+    responses(
+        (status = 200, description = "テストデータの一覧取得に成功", body = GetResponse),
+        (status = 500, description = "サーバーエラー", body = ErrorResponse),
+    )
+)]
 pub async fn get_example(State(uc): UcState) -> Result<impl IntoResponse, AppError> {
     match uc.get().await {
         Ok(result) => {

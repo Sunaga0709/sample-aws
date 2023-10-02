@@ -50,7 +50,7 @@ impl AppError {
         AppError::Internal(format!("{}/ {}", msg, err))
     }
 
-    fn value(&self) -> String {
+    fn _value(&self) -> String {
         match self {
             Self::InvalidArgument(msg) => msg.to_owned(),
             Self::NotFound(msg) => msg.to_owned(),

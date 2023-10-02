@@ -5,21 +5,22 @@
 // for REST
 use axum::{Router, Server as AxumServer};
 
-mod apperror;
-mod auth_service;
-mod config;
-mod dependency_injection;
-mod domain;
-mod gateway;
-mod gen;
-mod middleware;
-mod route;
-mod service;
-mod usecase;
-mod web;
+// mod apperror;
+// mod auth_service;
+// mod config;
+// mod dependency_injection;
+// mod domain;
+// mod gateway;
+// mod gen;
+// mod middleware;
+// mod route;
+// mod service;
+// mod usecase;
+// mod web;
 
 // use crate::auth_service::AuthService;
-use crate::config::Config;
+use server::config::Config;
+use server::route;
 // use crate::gateway::aws_cognito::AwsCognito;
 // use crate::gateway::aws_s3::AwsS3;
 // use crate::gateway::example::ExampleRepoImpl;

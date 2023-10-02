@@ -1,6 +1,7 @@
 use serde::{Deserialize, Serialize};
+use utoipa::ToSchema;
 
-#[derive(Clone, Deserialize)]
+#[derive(Clone, Deserialize, ToSchema)]
 pub struct SignUpRequest {
     pub name: String,
     pub email: String,
@@ -9,5 +10,5 @@ pub struct SignUpRequest {
     pub password_confirm: String,
 }
 
-#[derive(Clone, Serialize)]
+#[derive(Clone, Serialize, ToSchema)]
 pub struct SignUpResponse {}

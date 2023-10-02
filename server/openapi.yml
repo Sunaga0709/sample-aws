@@ -1,0 +1,57 @@
+openapi: 3.0.3
+info:
+  title: sample-aws-api
+  description: ''
+  license:
+    name: ''
+  version: 1.0.0
+paths:
+  /v1/example:
+    get:
+      tags:
+      - example_api
+      summary: Get examples
+      description: |-
+        Get examples
+
+        example document
+      operationId: get_example
+      responses:
+        '200':
+          description: テストデータの一覧取得に成功
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetResponse'
+        '500':
+          description: サーバーエラー
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    ErrorResponse:
+      type: object
+      required:
+      - code
+      - reason
+      - message
+      properties:
+        code:
+          type: integer
+          format: int32
+          minimum: 0
+        message:
+          type: string
+        reason:
+          type: string
+    GetResponse:
+      type: object
+      required:
+      - examples
+      properties:
+        examples:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetailResponse'
