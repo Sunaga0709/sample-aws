@@ -14,10 +14,12 @@ RUN apt install -y protobuf-compiler
 COPY ./Cargo.toml ./Cargo.toml
 COPY ./Cargo.lock ./Cargo.lock
 
-RUN mkdir src/
-RUN echo "fn main() {}" > src/main.rs
+RUN mkdir -p src/bin/
+RUN echo "fn main() {}" > src/bin/server.rs
+RUN echo "fn main() {}" > src/bin/api-doc.rs
 RUN cargo build
 RUN rm -rf ./target/debug/.fingerprint/server-*
+RUN rm -rf ./target/debug/.fingerprint/api-doc-*
 COPY ./src ./src
 
 FROM common AS dev

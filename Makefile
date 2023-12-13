@@ -39,7 +39,7 @@ gen-doc:
 cargo-test:
 	docker-compose exec app cargo test -- --nocapture
 migrate-create:
-	docker-compose exec migrate sqlx migrate add ${name}
+	docker-compose exec migrate sqlx migrate add ${name} -r
 migrate:
 	docker-compose exec migrate sqlx migrate run
 .PHONY: proto
